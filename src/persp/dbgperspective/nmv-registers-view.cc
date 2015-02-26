@@ -169,6 +169,8 @@ public:
         for (reg_iter = a_regs.begin ();
              reg_iter != a_regs.end ();
              ++reg_iter) {
+            if (reg_iter->second == "")
+                continue;
             Gtk::TreeModel::iterator tree_iter = list_store->append ();
             (*tree_iter)[get_columns ().id] = reg_iter->first;
             (*tree_iter)[get_columns ().name] = reg_iter->second;
