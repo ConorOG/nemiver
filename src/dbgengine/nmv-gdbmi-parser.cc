@@ -4410,6 +4410,7 @@ GDBMIParser::analyse_pure_asm_instrs (GDBMIListSafePtr a_gdbmi_list,
         GDBMIValueSafePtr val;
         GDBMIValue::Type content_type;
         string addr, func_name, instr, offset;
+        std::size_t tab;
         list<GDBMIResultSafePtr>::const_iterator res_iter;
         for (res_iter = result_list.begin ();
              res_iter != result_list.end ();
@@ -4435,6 +4436,9 @@ GDBMIParser::analyse_pure_asm_instrs (GDBMIListSafePtr a_gdbmi_list,
                        && content_type == GDBMIValue::STRING_TYPE) {
                 // get instr field
                 instr = val->get_string_content ();
+                tab = instr.find("\\t");
+                if (tab != std::string::npos)
+                    instr.replace(tab,2," \t");
                 LOG_DD ("instr: " << instr);
             }
         }
